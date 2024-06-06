@@ -1,12 +1,15 @@
 package org.project.model;
 
 import lombok.*;
+import org.project.util.enums.Status;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
 
@@ -31,6 +34,9 @@ public class Student implements Formatter {
 	private Team team;
 	@OneToMany(fetch = LAZY)
 	private Set<Repo> repos = new HashSet<>();
+	@Column(name = "status", nullable = false)
+	@Enumerated(value = STRING)
+	private Status status;
 
 	@Override
 	public Object[] getFormattedData() {

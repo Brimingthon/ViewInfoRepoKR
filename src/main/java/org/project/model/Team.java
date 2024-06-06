@@ -1,11 +1,14 @@
 package org.project.model;
 
 import lombok.*;
+import org.project.util.enums.Status;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -26,6 +29,9 @@ public class Team implements Formatter {
 	private long telegramUserId;
 	@OneToMany(fetch = LAZY)
 	private Set<Student> students = new HashSet<>();
+	@Column(name = "status", nullable = false)
+	@Enumerated(value = STRING)
+	private Status status;
 
 	@Override
 	public Object[] getFormattedData() {

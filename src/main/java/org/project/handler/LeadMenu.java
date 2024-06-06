@@ -29,7 +29,7 @@ public class LeadMenu extends UpdateHandler {
 
         deleteRemovableMessagesAndEraseAllFromRepo(userId);
 
-        sendRemovableMessage(userId, "general menu", getMenuKeyboard());
+        sendRemovableMessage(userId, "<b>Вітаємо у загальному меню!\n Оберіть опцію нижче!</b>", getMenuKeyboard());
     }
 
     @Override

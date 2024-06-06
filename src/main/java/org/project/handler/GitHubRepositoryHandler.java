@@ -32,7 +32,7 @@ public class GitHubRepositoryHandler extends UpdateHandler{
 		GHRepository repository = null;
 
 		GitHub github = GitHub.connectAnonymously();
-		repository = github.getRepository("Brimingthon/crispy-potato");
+		repository = github.getRepository("");
 
 
 		String string = String.format("Repository: %s\nDescription: %s\nStars: %d\nForks: %d\nOpen Issues: %d",

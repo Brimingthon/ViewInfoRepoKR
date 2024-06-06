@@ -19,4 +19,9 @@ public class TeamServiceImpl implements TeamService {
 		return teamRepository.findByTelegramUserId(userId, pageable);
 	}
 
+	@Override
+	public Team saveTeam(Team team) {
+		return teamRepository.save(team);
+	}
+
 }

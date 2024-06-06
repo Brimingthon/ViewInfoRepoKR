@@ -1,10 +1,13 @@
 package org.project.model;
 
 import lombok.*;
+import org.project.util.enums.Status;
+
 import javax.persistence.*;
 import java.time.LocalTime;
 import java.util.List;
 import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.EnumType.STRING;
 
 
 @Entity
@@ -38,6 +41,9 @@ public class Repo implements Formatter {
 	private LocalTime updatedAt;
 	@Column(name = "url")
 	private String url;
+	@Column(name = "status", nullable = false)
+	@Enumerated(value = STRING)
+	private Status status;
 
 	@Override
 	public Object[] getFormattedData() {

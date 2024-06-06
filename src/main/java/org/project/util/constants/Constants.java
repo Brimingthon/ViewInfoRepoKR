@@ -2,7 +2,7 @@ package org.project.util.constants;
 
 public class Constants {
     public static final int DEFAULT_OFFSET = 0;
-    public static final int DEFAULT_TEAM_LIMIT = 6;
+    public static final int DEFAULT_LIMIT = 6;
     public static final String DEFAULT_NAME_FIELD = "name";
     public static final String DEFAULT_ID_FIELD = "id";
     public static final String DEFAULT_SEPARATOR = "|";

@@ -15,7 +15,7 @@ import static org.project.util.UpdateHelper.isUpdateCallbackEqualsHandler;
 import static org.project.util.enums.HandlerName.*;
 
 @Component
-public class CreateTeam extends UpdateHandler {
+public class CreateRepo extends UpdateHandler {
 	@Override
 	public boolean isApplicable(Optional<Phase> phaseOptional, Update update) {
 		return isUpdateCallbackEqualsHandler(update, handlerPhase.getHandlerName());
@@ -28,13 +28,13 @@ public class CreateTeam extends UpdateHandler {
 
 		deleteRemovableMessagesAndEraseAllFromRepo(userId);
 
-		sendRemovableMessage(userId, "write down group name");
+		sendRemovableMessage(userId, "write down repo and owner");
 
 	}
 
 	@Override
 	public void initHandler() {
-		handlerPhase = getPhaseService().getPhaseByHandlerName(TEAM_CREATION);
+		handlerPhase = getPhaseService().getPhaseByHandlerName(STUDENT_CREATION);
 	}
 
 

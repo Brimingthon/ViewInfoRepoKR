@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TeamService {
 	Page<Team> getAllTeamByUserId(long userId, Pageable pageable);
+
+    Team saveTeam(Team team);
 }

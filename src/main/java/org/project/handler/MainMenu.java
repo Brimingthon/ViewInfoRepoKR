@@ -43,7 +43,7 @@ public class MainMenu extends UpdateHandler {
 
         deleteRemovableMessagesAndEraseAllFromRepo(userId);
 
-        sendRemovableMessage(userId, "Вітаємо!", getMainMenuKeyboard());
+        sendRemovableMessage(userId, "<b>Вітаємо у застосунку для перегляду репозиторіїв!</b>", getMainMenuKeyboard());
     }
 
     @Override

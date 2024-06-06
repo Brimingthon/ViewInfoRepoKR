@@ -1,5 +1,7 @@
 package org.project.util;
 
+import org.project.model.Repo;
+import org.project.model.Student;
 import org.project.model.Team;
 import org.project.util.enums.HandlerName;
 import org.springframework.data.domain.Page;
@@ -40,7 +42,7 @@ public class Keyboards {
     public static InlineKeyboardMarkup getMainMenuKeyboard() {
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
 
-        firstRow.add(InlineKeyboardButton.builder().text("go to team menu").callbackData(LEAD_MENU.name()).build());
+        firstRow.add(InlineKeyboardButton.builder().text("До головного меню").callbackData(LEAD_MENU.name()).build());
 
         return new InlineKeyboardMarkup(of(firstRow));
     }
@@ -73,41 +75,117 @@ public class Keyboards {
 
     public static InlineKeyboardMarkup getMenuKeyboard() {
         List<InlineKeyboardButton> first =
-                of(InlineKeyboardButton.builder().text("go to team menu").callbackData(TEAM_MENU.name()).build());
+                of(InlineKeyboardButton.builder().text("Перейти до меню груп").callbackData(TEAM_MENU.name()).build());
         List<InlineKeyboardButton> second =
-                of(InlineKeyboardButton.builder().text("search for git repo").callbackData(TRACKING_ROUTES.name()).build());
+                of(InlineKeyboardButton.builder().text("Знайти інформацію про репозиторій").callbackData(SEARCH_GIT.name()).build());
         return new InlineKeyboardMarkup(of(first, second));
     }
 
     public static InlineKeyboardMarkup getAvailableTeamsKeyboard(Page<Team> teams, HandlerName navigationCallback,
                                                                  HandlerName teamCallback, HandlerName backCallback) {
-        List<Team> tripsList = teams.toList();
+        List<Team> teamsList = teams.toList();
         List<List<InlineKeyboardButton>> rows = new ArrayList<>();
 
         if (hasPreviousPage(teams)) {
-            rows.add(of(InlineKeyboardButton.builder().text("back")
+            rows.add(of(InlineKeyboardButton.builder().text("Попередня сторінка")
                     .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, teams.getNumber() - 1)).build()));
         }
 
-        for (Team value : tripsList) {
+        for (Team value : teamsList) {
             rows.add(new ArrayList<>(of(getTeamButton(value, teamCallback))));
         }
 
         if (hasNextPage(teams)) {
-            rows.add(of(InlineKeyboardButton.builder().text("next")
+            rows.add(of(InlineKeyboardButton.builder().text("Наступна сторінка")
                     .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, teams.getNumber() + 1)).build()));
         }
 
-        rows.add(of(InlineKeyboardButton.builder().text("previous").callbackData(backCallback.name()).build()));
-        rows.add(of(InlineKeyboardButton.builder().text("create team").callbackData(TEAM_CREATION.name()).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Попереднє меню").callbackData(backCallback.name()).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Створити групу").callbackData(TEAM_CREATION.name()).build()));
 
         return new InlineKeyboardMarkup(rows);
     }
     private static InlineKeyboardButton getTeamButton(Team team, HandlerName teamCallback) {
-        return InlineKeyboardButton.builder().text("Dsfsdf")
+        return InlineKeyboardButton.builder().text(team.getName())
                 .callbackData(buildCallbackFromHandlerAndIdParam(teamCallback, team.getId())).build();
     }
 
+    public static InlineKeyboardMarkup getAvailableStudentsKeyboard(Page<Student> students, HandlerName navigationCallback,
+                                                                    HandlerName studentCallback, HandlerName backCallback) {
+        List<Student> studentsList = students.toList();
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+
+        if (hasPreviousPage(students)) {
+            rows.add(of(InlineKeyboardButton.builder().text("Попередня сторінка")
+                    .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, students.getNumber() - 1)).build()));
+        }
+
+        for (Student value : studentsList) {
+            rows.add(new ArrayList<>(of(getStudentButton(value, studentCallback))));
+        }
+
+        if (hasNextPage(students)) {
+            rows.add(of(InlineKeyboardButton.builder().text("Наступна сторінка")
+                    .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, students.getNumber() + 1)).build()));
+        }
+
+        rows.add(of(InlineKeyboardButton.builder().text("Попереднє меню").callbackData(backCallback.name()).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Додати користувача").callbackData(TEAM_CREATION.name()).build()));
+
+        return new InlineKeyboardMarkup(rows);
+    }
+    private static InlineKeyboardButton getStudentButton(Student student, HandlerName studentCallback) {
+        return InlineKeyboardButton.builder().text(student.getName()+" "+ student.getSurname())
+                .callbackData(buildCallbackFromHandlerAndIdParam(studentCallback, student.getId())).build();
+    }
+
+    public static InlineKeyboardMarkup getAvailableReposKeyboard(Page<Repo> repos, HandlerName navigationCallback,
+                                                                 HandlerName repocallback, HandlerName backCallback) {
+        List<Repo> repoList = repos.toList();
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+
+        if (hasPreviousPage(repos)) {
+            rows.add(of(InlineKeyboardButton.builder().text("Попередня сторінка")
+                    .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, repos.getNumber() - 1)).build()));
+        }
+
+        for (Repo value : repoList) {
+            rows.add(new ArrayList<>(of(getRepoButton(value, repocallback))));
+        }
+
+        if (hasNextPage(repos)) {
+            rows.add(of(InlineKeyboardButton.builder().text("Наступна сторінка")
+                    .callbackData(buildCallbackFromHandlerAndIdParam(navigationCallback, repos.getNumber() + 1)).build()));
+        }
+
+        rows.add(of(InlineKeyboardButton.builder().text("Попереднє меню").callbackData(backCallback.name()).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Додати існуючий репозиторій").callbackData(REPO_CREATION.name()).build()));
+
+        return new InlineKeyboardMarkup(rows);
+    }
+    private static InlineKeyboardButton getRepoButton(Repo repo, HandlerName repoCallback) {
+        return InlineKeyboardButton.builder().text(repo.getName())
+                .callbackData(buildCallbackFromHandlerAndIdParam(repoCallback, repo.getId())).build();
+    }
+
+    public static InlineKeyboardMarkup getMoreRepoInfoKeyboard(long repo, HandlerName commitCallback,
+                                                               HandlerName branchCallback) {
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+        rows.add(of(InlineKeyboardButton.builder().text("Переглянути коміти")
+                .callbackData(buildCallbackFromHandlerAndIdParam(commitCallback, repo)).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Переглянути гілки")
+                .callbackData(buildCallbackFromHandlerAndIdParam(branchCallback, repo)).build()));
+        rows.add(of(InlineKeyboardButton.builder().text("Попереднє меню")
+                .callbackData(buildCallbackFromHandlerAndIdParam(branchCallback, repo)).build()));
+        return new InlineKeyboardMarkup(rows);
+    }
+
+    public static InlineKeyboardMarkup getBackRepoKeyboard(long repo, HandlerName backCallback) {
+        List<List<InlineKeyboardButton>> rows = new ArrayList<>();
+        rows.add(of(InlineKeyboardButton.builder().text("Повернутись")
+                .callbackData(buildCallbackFromHandlerAndIdParam(backCallback, repo)).build()));
+        return new InlineKeyboardMarkup(rows);
+    }
     private static boolean hasPreviousPage(Page<?> page) {
         return !page.isFirst() && page.getTotalPages() > 1;
     }
